@@ -1,5 +1,5 @@
 # cli test usage
-- create a virtual environment, active it
+- create a virtual environment, activate it
 - pip install from requirements.in: python -m pip install -r requirements.in
 - run the test.py program: python test.py
 - see: https://github.com/JazzCore/python-pdfkit/wiki/Installing-wkhtmltopdf if "code to pdf" command is needed
@@ -11,7 +11,7 @@
 - traverse to the cli project folder and install cli package and its dependencies (python setup.py develop)
 - create a file like below in the new project folder
 ```
-from cli import CLI, Weather, Clipboard, SecondBrain
+from cli import CLI, Weather, Clipboard
 cli = CLI(Weather(), Clipboard())
 cli.start()
 ```
