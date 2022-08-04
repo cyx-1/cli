@@ -2,13 +2,14 @@ from rich.console import Console
 from pygments import highlight
 from pygments.lexers import PythonLexer
 from pygments.lexers.jvm import JavaLexer
-from pygments.lexers.javascript import JavascriptLexer
-from pygments.lexers.javascript import TypeScriptLexer
+from pygments.lexers.javascript import JavascriptLexer, TypeScriptLexer
 from pygments.formatters import HtmlFormatter
 from typing import List
 from rich.prompt import Prompt
 import pdfkit
+import subprocess
 import os
+import sys
 from .api import CLIInterface
 
 
@@ -60,5 +61,12 @@ class CodePDFGenerator(CLIInterface):
         self.console.print(f'{language_detected} language detected, proceeding to generate pdf for code with highlighting')
         html = highlight(data, self.language[language_detected][1](), HtmlFormatter(full=True, linenos=True))
         pdfkit.from_string(html, 'out.pdf')
-        os.startfile('out.pdf')
-        self.console.print('PDF generation completed')
+        self.open_file('out.pdf')
+        self.console.print('PDF generation completed!')
+
+    def open_file(self, filename):
+        if sys.platform == "win32":
+            os.startfile(filename)
+        else:
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, filename])
